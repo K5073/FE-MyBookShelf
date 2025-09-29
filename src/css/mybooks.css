@@ -1,0 +1,979 @@
+.my-books {
+  padding: 20px;
+}
+
+.bookshelf-header {
+  margin-bottom: 20px;
+}
+
+.bookshelf-controls {
+  display: flex;
+  align-items: center;
+}
+
+.rename-input {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* ---------- 책장 리스트박스 ---------- */
+/* ---------------------------------- */
+/* 📚 책장 셀렉트박스 */
+.bookshelf-select {
+  padding: 10px 16px;
+  margin-right: 16px;
+  width: 320px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.3s;
+}
+.bookshelf-select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* 📌 버튼 공통 스타일 */
+.rename-button,
+.add-bookshelf-button,
+.delete-bookshelf-button,
+.add-book-button,
+.recommend-button,
+.edit-button,
+.share-button {
+  font-size: 15px;
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ✏ 이름 변경 */
+.rename-button {
+  background-color: #ffa500;
+}
+.rename-button:hover {
+  background-color: #e68900;
+  transform: translateY(-2px);
+}
+
+/* ➕ 책장 생성 */
+.add-bookshelf-button {
+  background-color: #28a745;
+}
+.add-bookshelf-button:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+/* 🗑 책장 삭제 */
+.delete-bookshelf-button {
+  background-color: #dc3545;
+}
+.delete-bookshelf-button:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+}
+
+/* 📘 책 등록 */
+.add-book-button {
+  background-color: #007bff;
+  margin-left: 20px;
+}
+.add-book-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* 🤖 도서 추천 */
+.recommend-button {
+  background-color: #6f42c1;
+}
+.recommend-button:hover {
+  background-color: #5a32a3;
+  transform: translateY(-2px);
+}
+
+/* 🧹 도서 삭제 모드 */
+.edit-button {
+  background-color: #e74c3c;
+}
+.edit-button:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+/* 📤 책장 공유 */
+.share-button {
+  background-color: #17a2b8;
+}
+.share-button:hover {
+  background-color: #138496;
+  transform: translateY(-2px);
+}
+
+
+/* ---------- 네모난 책장 폼 ---------- */
+/* --------------------------------- */
+.bookshelf {
+  padding: 20px;
+  border: 7px solid #ddd;
+  border-radius: 8px;
+  width: 1500px;
+  height: auto;
+  position: relative; /* 자식 요소의 절대 위치 지정 가능 */
+}
+
+/* 책장 내부 책 표지 */
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 40px;
+  position: relative; /* 책 그리드의 위치 설정 */
+  z-index: 1; /* 그리드가 이미지 위에 오도록 설정 */
+}
+
+/* 책 플레이스홀더 */
+.book-placeholder {
+  width: 100%; /* 너비를 100%로 설정하여 그리드에 맞게 조정 */
+  height: auto;
+  background-color: #e9ecef;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  flex-direction: column; /* 세로로 정렬 */
+  justify-content: center; /* 세로 중앙 정렬 */
+  /* justify-content: center; */
+  align-items: center; /* 세로 중앙 정렬 */
+  overflow: hidden; /* 자식 요소가 넘칠 경우 숨기기 */
+}
+
+/* 책장 책 표지 */
+.bookshelfbook-cover {
+  margin-top: 10px;
+  width: 240px; 
+  height: 310px;
+  /* height: 100%; */
+  display: flex; /* 플렉스 박스 사용 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+}
+.bookshelfbook-cover img {
+  width: 85%;
+  height: auto;
+  object-fit: cover; /* 비율을 유지하면서 요소를 가득 채우기 */
+  border-radius: 8px; /* 모서리 둥글게 처리 (선택 사항) */
+}
+/* 책 정보 스타일 */
+.bookshelf-info {
+  text-align: center; /* 중앙 정렬 */
+  padding: 10px 0; /* 위아래 여백 추가 */
+  margin-top: 10px;
+}
+
+.bookshelf-title {
+  font-weight: bold; /* 제목을 굵게 */
+}
+
+.bookshelf-author, .bookshelf-category {
+  font-size: 0.9em; /* 글자 크기를 약간 작게 */
+}
+
+/* 책 제거 버튼 */
+.remove-book-button {
+  position: absolute; /* 절대 위치 지정 */
+  top: 5px; /* 위치 조정 */
+  right: 5px; /* 위치 조정 */
+  background-color: red; /* 배경색 */
+  color: white; /* 글자색 */
+  border: none; /* 테두리 제거 */
+  border-radius: 50%; /* 동그란 버튼 */
+  width: 25px; /* 너비 */
+  height: 25px; /* 높이 */
+  cursor: pointer; /* 커서 변경 */
+  font-size: 16px; /* 글자 크기 */
+  line-height: 25px; /* 수직 정렬 */
+  text-align: center; /* 수평 정렬 */
+}
+
+/* 추가 메뉴 */
+.context-menu {
+  position: fixed;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1002; /* 모달보다 위에 표시 */
+}
+
+.context-menu button {
+  display: block;
+  padding: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.context-menu button:hover {
+  background-color: #f0f0f0; /* 마우스 오버 시 배경색 변경 */
+}
+
+/* ---------- 책장 추가 모달 ---------- */
+.add-bookshelf-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 340px;
+  padding: 28px 24px;
+  background: #fffdf9;
+  border-radius: 16px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  animation: fadeInModal 0.3s ease;
+}
+
+.add-bookshelf-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.add-bookshelf-modal-content label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.add-bookshelf-modal-content input[type="text"] {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+.add-bookshelf-modal-content input[type="text"]:focus {
+  border-color: #ffa500;
+  box-shadow: 0 0 5px rgba(255, 165, 0, 0.5);
+}
+
+/* 책장 생성 버튼 */
+.create-bookshelf-button {
+  background-color: #ffa500;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+.create-bookshelf-button:hover {
+  background-color: #ff8c00;
+}
+
+/* 취소 버튼 */
+.close-modal-button {
+  background-color: #e0e0e0;
+  color: #333;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.close-modal-button:hover {
+  background-color: #d0d0d0;
+}
+
+/* ---------- 로딩 모달 ---------- */
+.loading-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.loading-modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+  animation: fadeInModal 0.4s ease;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 16px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #ffa500;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-modal-content p {
+  margin-bottom: 16px;
+  color: #444;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.cancel-recommendation-button {
+  background-color: #ccc;
+  color: #333;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.cancel-recommendation-button:hover {
+  background-color: #bbb;
+}
+
+/* ---------- 공통 애니메이션 ---------- */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* === 🪟 추천 모달 전체 배경 === */
+.recommendation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* === 📦 모달 콘텐츠 박스 === */
+.recommendation-modal-content {
+  background: linear-gradient(135deg, #fffdf7, #ffe0b3);
+  border-radius: 18px;
+  padding: 40px 30px;
+  width: 90%;
+  max-width: 580px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.3s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* === ⬆️ 추천 방식 선택 버튼들 (상단) === */
+.plus-recommendation-options {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.plus-recommendation-options button {
+  flex: 1;
+  padding: 14px 20px;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.plus-recommendation-options button:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+}
+.plus-recommendation-options button.active {
+  background-color: #ff9900;
+  color: white;
+  border-color: #cc7a00;
+  box-shadow: 0 3px 10px rgba(255, 165, 0, 0.35);
+}
+
+/* === 📑 설명 문구 정렬 === */
+.recommendation-options {
+  text-align: center;
+  font-size: 16px;
+  color: #444;
+  line-height: 1.6;
+}
+
+/* === ✅ 버튼 컨테이너 (추천받기, 취소 등) === */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.recommend-books-button {
+  background-color: #28a745; /* 추천받기 버튼 색상 */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 15px;
+  cursor: pointer;
+}
+
+/* === 💡 추천받기 버튼 === */
+.recommend-books-button,
+.next-button,
+.prev-button {
+  background-color: #28a745;
+  color: white;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+.recommend-books-button:hover,
+.next-button:hover,
+.prev-button:hover {
+  background-color: #218838;
+}
+
+/* === ❌ 취소 버튼 === */
+.close-modal-button {
+  background-color: #ccc;
+  color: #333;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+.close-modal-button:hover {
+  background-color: #bbb;
+}
+
+/* === 📊 설문 - 진행도 표시 === */
+.progress-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0 30px;
+}
+.dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #ddd;
+  transition: background-color 0.3s;
+}
+.dot.active {
+  background-color: #ffa500;
+  box-shadow: 0 0 0 3px rgba(255,165,0,0.2);
+}
+
+/* === 🔲 설문 옵션 버튼 스타일 === */
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 0 auto;
+  max-width: 400px;
+}
+
+.survey-option-button {
+  padding: 16px;
+  font-weight: 600;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.survey-option-button:hover {
+  background-color: #eee;
+  transform: translateY(-2px);
+}
+.survey-option-button.selected {
+  background-color: #ffa500;
+  border-color: #cc7a00;
+  color: white;
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+}
+
+/* ---------- 추가 평점 모달 ---------- */
+.additional-rating-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1002;
+  width: 90vw;        /* 뷰포트 기준 너비로 더 넓게 설정 */
+  max-width: 2000px;  /* 너무 넓어지지 않게 제한값 추가 */
+}
+
+.additional-rating-modal-content {
+  background-color: rgb(168, 211, 255); /* 배경색 */
+  border-radius: 8px; /* 모서리 둥글게 */
+  padding: 20px; /* 패딩 */
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+  max-height: 80vh; /* 최대 높이 설정 */
+  overflow-y: auto; /* 세로 방향으로 스크롤 가능 */
+}
+
+.additional-rating-header {
+  font-size: 18px; /* 헤더 크기 */
+  font-weight: bold;
+  margin-bottom: 15px; /* 아래쪽 여백 */
+}
+
+.rating-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* 항목 간의 간격 */
+}
+
+.rating-item {
+  width: calc(50% - 20px);
+  display: flex; /* 가로 방향 정렬 */
+  align-items: center; /* 수직 정렬 */
+  gap: 10px; /* 책 표지와 정보 간의 간격 */
+  border: 1px solid #ddd; /* 테두리 */
+  padding: 10px; /* 내부 여백 */
+  border-radius: 5px; /* 모서리 둥글게 */
+  background-color: #f9f9f9; /* 배경색 */
+  box-sizing: border-box;
+}
+
+.rating-cover {
+  width: 60px;         /* 통일된 너비 */
+  height: 90px;        /* 통일된 높이 */
+  flex-shrink: 0;      /* 축소되지 않도록 방지 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white; /* 없으면 배경 투명 */
+  border: 1px solid #ccc;  /* 선택: 테두리 */
+  border-radius: 4px;       /* 선택: 둥글게 */
+  overflow: hidden;         /* 넘치는 부분 숨기기 */
+}
+
+.rating-cover img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* 비율 유지하면서 전체 보이게 */
+}
+
+.rating-info {
+  flex-grow: 1; /* 남은 공간을 차지 */
+  margin-left: 40px; /* 표지와의 간격 조정 */
+  margin-bottom: 10px;
+}
+
+.rating-info div {
+  margin-top: 5px; /* 각 정보 항목 간격 조정 */
+}
+
+.rating-details {
+  margin-top: 5px; /* 상단 여백 추가 */
+}
+
+.rating-title {
+  font-weight: bold; /* 제목 두껍게 */
+  font-size: 20px; /* 제목 크기 */
+  margin-bottom: 10px;
+}
+
+.rating-author {
+  font-size: 18px; /* 저자 크기 */
+  color: gray; /* 저자 색상 */
+  margin-bottom: 8px;
+
+}
+
+.rating-category {
+  font-size: 18px;
+  color: #28a745;
+}
+
+.rating-gerne
+.rating-prefer       
+.rating-keyword
+.rating-duplicate
+.rating-loan     
+.rating-best
+.rating-total
+.rating-score {
+  font-size: 14px; /* 평점 크기 */
+}
+
+.select-rating-button {
+  padding: 5px 10px;
+  background-color: #007bff; /* 선택 버튼 색상 */
+  color: white; /* 글자 색상 */
+  border: none; /* 테두리 제거 */
+  border-radius: 4px; /* 모서리 둥글게 */
+  cursor: pointer; /* 커서 변경 */
+}
+
+.select-rating-button:hover {
+  background-color: #0056b3; /* 호버 시 색상 변경 */
+}
+
+/* 모달 닫기 버튼 */
+.close-rating-modal-button {
+  margin-top: 15px; /* 위쪽 마진 */
+  padding: 8px;
+  background-color: #dc3545; /* 닫기 버튼 색상 */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+
+/* ---------- 사이드바 ---------- */
+/* ---------------------------- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 50vw;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 25px;
+}
+.sidebar .registration-options {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+.sidebar .registration-options button {
+  padding: 12px 24px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #ffffff;
+  transition: background-color 0.3s, border-color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1; /* 버튼들이 고르게 배치되도록 함 */
+}
+.sidebar .registration-options button:hover {
+  background-color: #f5f5f5;
+  border-color: #ccc;
+}
+.sidebar .registration-options button.active {
+  background-color: #4caf50;
+  color: white;
+  border-color: #45a049;
+}
+.sidebar .registration-options button:not(.active):not(:disabled) {
+  background-color: #f0f0f0;
+  border-color: #ccc;
+  color: #888; /* 연한 회색 */
+}
+.sidebar .registration-options button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+  border-color: #bbb;
+  color: #bbb; /* 연한 회색으로 글자 색상 */
+}
+
+/* input 및 버튼 스타일일 */
+.sidebar .manual-form input,
+.sidebar .isbn-form input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+.sidebar .file-upload-button,
+.sidebar .camera-button {
+  padding: 12px 24px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: block;
+  width: 100%;
+}
+.sidebar .file-upload-button:hover,
+.sidebar .camera-button:hover {
+  background-color: #1976d2;
+}
+
+/* 사이드바 검색된 책들 */
+.search-results ul {
+  display: grid; /* 그리드 레이아웃 사용 */
+  grid-template-columns: repeat(2, 1fr); /* 2개씩 배치 */
+  gap: 10px; /* 항목 간의 간격 */
+  padding: 0; /* 기본 패딩 제거 */
+  list-style-type: none; /* 리스트 스타일 제거 */
+}
+
+.search-book-item {
+  display: flex; /* 가로 정렬 */
+  align-items: center; /* 수직 정렬 */
+  gap: 10px; /* 표지와 정보 사이 여백 */
+  border: 1px solid #ddd; /* 테두리 */
+  padding: 10px; /* 내부 여백 */
+  background: white; /* 배경색 */
+  border-radius: 5px; /* 모서리 둥글게 */
+}
+
+/* 왼쪽: 책 표지 */
+.sidebook-cover {
+  flex-shrink: 0; /* 크기 고정 */
+  width: 140px; /* 표지 너비 */
+  height: 160px; /* 표지 높이 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebook-cover img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+/* 오른쪽: 제목, 저자, 버튼 */
+.sidebook-info {
+  display: flex;
+  flex-direction: column; /* 세로 정렬 */
+  flex-grow: 1; /* 남은 공간 차지 */
+  justify-content: center;
+  gap: 4px; /* 요소 간 간격 */
+}
+
+.sidebook-title {
+  font-weight: bold;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px; /* 제목 최대 너비 */
+}
+
+.sidebook-author {
+  font-size: 12px;
+  color: gray;
+}
+
+/* 선택 버튼 */
+.sideselect-book-button {
+  align-self: flex-start; /* 왼쪽 정렬 */
+  padding: 4px 8px;
+  font-size: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.sideselect-book-button:hover {
+  background-color: #0056b3;
+}
+
+/* 사이드바 결과 책 표지 */
+.book-cover {
+  display: flex;
+  align-items: stretch;
+  width: 50px;
+  height: auto;
+  flex-shrink: 0; /* 표지 크기 고정 */
+}
+.book-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 제목과 버튼 간의 공간을 조절 */
+  /* justify-content: center; */
+  flex-grow: 1;
+}
+.book-title {
+  font-weight: bold;
+  font-size: 14px;
+}
+.book-author {
+  font-size: 12px;
+  color: gray;
+}
+.select-book-button {
+  margin-top: auto; /* 버튼을 아래쪽으로 이동 */
+  /* margin-top: 5px; */
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.select-book-button:hover {
+  background-color: #0056b3;
+}
+
+/* 페이지네이션 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px; /* 페이지네이션과 위쪽 요소 간의 간격을 조절 */
+}
+.pagination button {
+  margin: 0 5px; /* 버튼 간의 간격을 조절 */
+}
+
+.confirm-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1001; /* 사이드바보다 위에 표시 */
+}
+.confirm-modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.confirm-modal button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.confirm-modal-button-container {
+  display: flex; /* 수평 정렬을 위해 flex 사용 */
+  justify-content: space-between; /* 버튼 사이에 공간을 균등하게 배치 */
+  width: 100%; /* 컨테이너의 너비를 100%로 설정 */
+  margin-top: 20px; /* 버튼 위에 간격 추가 */
+}
+.confirm-modal button:hover {
+  background-color: #0056b3;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease; 
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.loading-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1005;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.spinner {
+  margin: 1rem auto;
+  width: 50px;
+  height: 50px;
+  border: 6px solid #ddd;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.rating-save-button-area {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.rating-save-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.rating-save-button:hover {
+  background-color: #45a049;
+}
+
+.survey-title {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
